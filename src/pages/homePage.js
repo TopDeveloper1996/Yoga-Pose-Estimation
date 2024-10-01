@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import CardPose from "../component/poseCard";
+import CardPose from "../components/poseCard";
 
 const HomePage = () => {
   return (

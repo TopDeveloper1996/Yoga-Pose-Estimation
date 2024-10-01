@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import PoseCard from "../component/poseCard";
-import DragDropExample from "../component/drag-drop";
-import WebcamComponent from "../component/webCamera";
+import PoseCard from "../components/poseCard";
+import DragDropExample from "../components/drag-drop";
+import WebcamComponent from "../components/webCamera";
 
 const cardData = [
   {

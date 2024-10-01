@@ -1,6 +1,6 @@
 import * as React from "react";
-import DropdownYearly from "../component/dropdownYearly";
-import DropdownMonthly from "../component/dropdownMonthly";
+import DropdownYearly from "../components/dropdownYearly";
+import DropdownMonthly from "../components/dropdownMonthly";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { axisClasses } from "@mui/x-charts/ChartsAxis";
 import { dataset } from "./data.js";

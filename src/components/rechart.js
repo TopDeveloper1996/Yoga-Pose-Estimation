@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// import MonthlyChart from "../component/rechart";
+// import MonthlyChart from "../components/rechart";
 // const monthlyData2023 = [
 //   { month: 'January', value: 120 },
 //   { month: 'February', value: 150 },

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import PoseCard from "../component/poseCard";
-import LearnerState from "../component/learner-state";
-import ButtonCarousel from "../component/buttonCarousel";
-import LearnerCard from "../component/learnerCard";
+import PoseCard from "../components/poseCard";
+import LearnerState from "../components/learner-state";
+import ButtonCarousel from "../components/buttonCarousel";
+import LearnerCard from "../components/learnerCard";
 
 const cardData = [
   {

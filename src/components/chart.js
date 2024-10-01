@@ -1,7 +1,7 @@
 // src/components/MonthlyChart.js
 import React, { useEffect, useRef } from "react";
 import { Chart, registerables } from "chart.js";
-//// import MonthlyChart from "../component/chart";
+//// import MonthlyChart from "../components/chart";
 
 // const monthlyData2024 = {
 //   labels: [
