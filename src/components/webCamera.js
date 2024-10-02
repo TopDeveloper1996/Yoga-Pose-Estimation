@@ -31,8 +31,8 @@ const WebcamComponent = () => {
   }, []); // Empty dependency array to run only once (componentDidMount)
 
   return (
-    <div class="w-full h-full p-1">
-      <video ref={videoRef} autoPlay playsInline class="w-full h-full" />
+    <div className="w-full h-full p-1">
+      <video ref={videoRef} autoPlay playsInline className="w-full h-full" />
     </div>
   );
 };
