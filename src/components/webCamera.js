@@ -1,8 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 
-const WebcamComponent = () => {
-  const videoRef = useRef(null); // Ref to access the video element
-
+const WebcamComponent = ({ videoRef, canvasRef }) => {
   useEffect(() => {
     const startWebcam = async () => {
       try {
@@ -19,20 +17,26 @@ const WebcamComponent = () => {
       }
     };
 
-    startWebcam(); // Start the webcam when component mounts
+    startWebcam(); // Start the webcam when the component mounts
 
-    // Cleanup function to stop the stream when component unmounts
+    // Cleanup function to stop the stream when the component unmounts
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
         const tracks = videoRef.current.srcObject.getTracks();
         tracks.forEach((track) => track.stop()); // Stop all tracks
       }
     };
-  }, []); // Empty dependency array to run only once (componentDidMount)
+  }, [videoRef]);
 
   return (
     <div className="w-full h-full p-1">
-      <video ref={videoRef} autoPlay playsInline className="w-full h-full" />
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        className="w-full h-full object-cover"
+      />
+      <canvas ref={canvasRef} style={{ display: "none" }} />{" "}
     </div>
   );
 };

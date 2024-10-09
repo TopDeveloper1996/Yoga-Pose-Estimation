@@ -1,20 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PoseCard from "../components/poseCard";
 import LearnerState from "../components/learner-state";
 import ButtonCarousel from "../components/buttonCarousel";
 import LearnerCard from "../components/learnerCard";
-
-const cardData = [
-  {
-    poseId: 1,
-    isOpen: 1,
-    poseImage: "1",
-    poseMovie: "2",
-    description: "3",
-  },
-];
+import { PoseContext } from "../contexts/poseContext";
 
 function LearnerPage() {
+  const { fetchedPoses, getPose } = useContext(PoseContext);
+  const [speechMute, setSpeechMute] = useState(false);
+
+  useEffect(() => {
+    getPose({
+      pose_id: "65bb838ca5977c7b8cbbaf24", //optional
+      pose_detection_id: "65bb838ca5977c7b8cbbaf24", //optional
+      campus_group_id: "65bb838ca5977c7b8cbbaf24", //optional
+      campus_id: "65bb838ca5977c7b8cbbaf24", //optional
+      c_subject_id: "65bb838ca5977c7b8cbbaf24", //optional
+      subject_id: "65bb838ca5977c7b8cbbaf24", //optional
+      chapter_id: "65bbc13bcd5fd6f7ab67f6f1", //optional
+      topic_id: "65bbc13bcd5fd6f7ab67f6f4", //optional
+      pose_name: "string", //optional
+      sts: 1, //optional (1-Verified, 2-Non-Verified)
+    });
+  }, []);
+  const handleClickMute = () => {
+    setSpeechMute(!speechMute);
+  };
+
+  useEffect(() => {
+    console.log(fetchedPoses);
+  }, [fetchedPoses]);
+
+  const handleClickPose = (index) => {};
+
   return (
     <div className="flex flex-col h-screen">
       <div className="flex grow flex-wrap">
@@ -84,7 +102,10 @@ function LearnerPage() {
               id="poseMenu"
               className="w-full h-10 bg-[#004392] rounded my-2 content-center shadow-md shadow-gray-500"
             >
-              <ButtonCarousel />
+              <ButtonCarousel
+                ids={[1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 3, 2, 3, 4, 5]}
+                onClickPose={handleClickPose}
+              />
             </div>
 
             <div id="poseView" className="h-full w-full bg-white">
@@ -101,35 +122,38 @@ function LearnerPage() {
               Instruction
             </span>
             <div className="w-23 h-8 flex mx-2">
-              <button className="">
-                {/* <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
-              />
-            </svg> */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="size-5 text-[#004392]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
-                  />
-                </svg>
+              <button className="" onClick={handleClickMute}>
+                {speechMute ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-5 text-[#004392]"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-5 text-[#004392]"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
+                    />
+                  </svg>
+                )}
               </button>
               <div className="w-2 h-8 flex"></div>
               <button className="">
@@ -150,17 +174,7 @@ function LearnerPage() {
               </button>
             </div>
           </div>
-          <div className="inline-flex w-full h-20 text-gray-800 px-3 py-2 overflow-y-auto">
-            Start in a tabletop position, with your hands and knees on the mat.
-            Bring your right knee forward, placing the outer edge of the right
-            shinbone and right buttock on the mat. Extend your left leg straight
-            out behind you, with the top of the left knee, thigh, and ankle
-            resting on the floor.Start in a tabletop position, with your hands
-            and knees on the mat. Bring your right knee forward, placing the
-            outer edge of the right shinbone and right buttock on the mat.
-            Extend your left leg straight out behind you, with the top of the
-            left knee, thigh, and ankle resting on the floor.
-          </div>
+          <div className="inline-flex w-full h-20 text-gray-800 px-3 py-2 overflow-y-auto"></div>
         </div>
       </div>
     </div>

@@ -35,10 +35,6 @@ const MentorProvider = ({ children }) => {
   const [errorChapters, setErrorChapters] = useState(null);
   const [errorTopics, setErrorTopics] = useState(null);
 
-  // const [loadingPose, setLoadingPose] = useState(false);
-  // const [errorPose, setErrorPose] = useState(null);
-  // const [poseResponse, setPoseResponse] = useState(null);
-
   const getCampusesListingData = async ({
     userId,
     campusGroupId,
@@ -55,10 +51,11 @@ const MentorProvider = ({ children }) => {
           user_type: userType,
         }
       );
-      if (response.status === "200") {
-        setCampuses(response.data);
-      } else if (response.status === "404") {
+      if (response.data.status === 200) {
+        setCampuses(response.data.data);
+      } else if (response.status === 404) {
         setCampuses([]);
+        setErrorCampuses(response.data.msg);
       }
     } catch (err) {
       setErrorCampuses(err.message);
@@ -68,7 +65,7 @@ const MentorProvider = ({ children }) => {
     }
   };
 
-  const getCampusCourseBatch = async ({ campusId, currCatId }) => {
+  const getCampusCourseBatch = async ({ campusId, campusGroupId }) => {
     setLoadingSubjects(true);
     setErrorSubjects(null);
     try {
@@ -76,13 +73,14 @@ const MentorProvider = ({ children }) => {
         "api/campus_onboarding_ms/getCampusCourseBatch?courseSection=subject_names",
         {
           campus_id: campusId,
-          curr_cat_id: currCatId,
+          campus_group_id: campusGroupId,
         }
       );
-      if (response.status === "200") {
+      if (response.data.status === 200) {
         setSubjects(response.data);
       } else {
         setSubjects([]);
+        setErrorSubjects(response.data.msg);
       }
     } catch (err) {
       setErrorSubjects(err.message);
@@ -109,7 +107,7 @@ const MentorProvider = ({ children }) => {
         }
       );
 
-      if (response.status === "200") {
+      if (response.data.status === 200) {
         setDefaultChapters(response.data.defaulChapters);
         setCampusChapters(response.data.campusChapters);
       } else if (response.status) {
@@ -134,10 +132,11 @@ const MentorProvider = ({ children }) => {
         }
       );
 
-      if (response.status === "200") {
+      if (response.data.status === 200) {
         setTopics(response.data);
-      } else if (response.status === "404") {
+      } else if (response) {
         setTopics([]);
+        setErrorTopics(response.data.msg);
       }
     } catch (err) {
       setErrorTopics(err.message);

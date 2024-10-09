@@ -1,11 +1,11 @@
 import { createContext, useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 
 const PoseContext = createContext({
   poses: [],
   loadingPose: false,
   errorPose: null,
-  addPose: (poseData, images = [], video = null) => {},
+  addPose: ({ data, images = [], video = null }) => {},
   deletePose: ({ pose_detection_id, pose_id }) => {},
   getPose: ({
     pose_id,
@@ -17,7 +17,7 @@ const PoseContext = createContext({
     pose_name,
     sts,
   }) => {},
-  updatePose: (poseData, images = [], video = null) => {},
+  updatePose: ({ data, images = [], video = null }) => {},
 });
 
 const PoseProvider = ({ children }) => {
@@ -39,10 +39,10 @@ const PoseProvider = ({ children }) => {
     };
 
   const addPose = AsyncCatchError(
-    async (poseData, images = [], video = null) => {
+    async ({ data, images = [], video = null }) => {
       const formData = new FormData();
 
-      formData.append("data", JSON.stringify(poseData));
+      formData.append("data", JSON.stringify(data));
 
       if (images && images.length > 0) {
         images.forEach((image, index) => {
@@ -67,6 +67,7 @@ const PoseProvider = ({ children }) => {
     }
   );
 
+  const [fetchedPoses, setFetchedPoses] = useState([]);
   const getPose = AsyncCatchError(
     async ({
       pose_id,
@@ -79,7 +80,7 @@ const PoseProvider = ({ children }) => {
       sts,
     }) => {
       const response = await axios.post(
-        "/api/campus_dashboard_module_ms/yogaPoses/getPoseDetections",
+        "api/campus_dashboard_module_ms/yogaPoses/getPoseDetections",
         {
           pose_id,
           pose_detection_id,
@@ -92,7 +93,8 @@ const PoseProvider = ({ children }) => {
         }
       );
 
-      if (response.status === "200") {
+      if (response.status === 200) {
+        setFetchedPoses(response.data.data.posed);
       } else {
         throw new Error(response.data.message || "Failed to get pose");
       }
@@ -100,10 +102,10 @@ const PoseProvider = ({ children }) => {
   );
 
   const updatePose = AsyncCatchError(
-    async ({ poseData, images = [], video = null }) => {
+    async ({ data, images = [], video = null }) => {
       const formData = new FormData();
 
-      formData.append("data", JSON.stringify(poseData));
+      formData.append("data", JSON.stringify(data));
 
       if (images && images.length > 0) {
         images.forEach((image, index) => {
@@ -130,7 +132,7 @@ const PoseProvider = ({ children }) => {
 
   const deletePose = AsyncCatchError(async ({ pose_detection_id, pose_id }) => {
     const response = await axios.delete(
-      "/api/campus_dashboard_module_ms/yogaPoses/deletePoseDetections",
+      "api/campus_dashboard_module_ms/yogaPoses/deletePoseDetections",
       {
         params: {
           pose_detection_id,
@@ -147,7 +149,15 @@ const PoseProvider = ({ children }) => {
 
   return (
     <PoseContext.Provider
-      value={(loadingPose, errorPose, addPose, getPose, deletePose, updatePose)}
+      value={{
+        fetchedPoses,
+        loadingPose,
+        errorPose,
+        addPose,
+        getPose,
+        deletePose,
+        updatePose,
+      }}
     >
       {children}
     </PoseContext.Provider>
