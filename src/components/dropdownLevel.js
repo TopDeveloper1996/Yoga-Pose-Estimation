@@ -1,9 +1,9 @@
 // src/components/Dropdown.js
 import React, { useState, useRef, useEffect } from "react";
 
-const DropdownLevel = () => {
+const DropdownLevel = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("1");
+  const [selected, setSelected] = useState(0);
   const dropdownRef = useRef(null);
 
   const options = ["1", "5", "8"];
@@ -29,6 +29,7 @@ const DropdownLevel = () => {
   const handleSelect = (option) => {
     setSelected(option);
     setIsOpen(false);
+    onChange(optionStr[selected], options[selected]);
   };
 
   return (
@@ -84,7 +85,7 @@ const DropdownLevel = () => {
             {options.map((option, index) => (
               <button
                 key={option}
-                onClick={() => handleSelect(option)}
+                onClick={() => handleSelect(index)}
                 className="flex w-full text-left py-1 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none justify-between"
                 role="menuitem"
               >

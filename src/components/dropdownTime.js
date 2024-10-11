@@ -1,9 +1,9 @@
 // src/components/Dropdown.js
 import React, { useState, useRef, useEffect } from "react";
 
-const DropdownTime = () => {
+const DropdownTime = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("00:55");
+  const [selected, setSelected] = useState(0);
   const dropdownRef = useRef(null);
 
   const options = ["00:55", "02:00", "03:30"];
@@ -28,6 +28,7 @@ const DropdownTime = () => {
 
   const handleSelect = (option) => {
     setSelected(option);
+    onChange(options[option], optionStr[option]);
   };
 
   return (
@@ -84,7 +85,7 @@ const DropdownTime = () => {
             {options.map((option, index) => (
               <button
                 key={option}
-                onClick={() => handleSelect(option)}
+                onClick={() => handleSelect(index)}
                 className="flex w-full text-left py-1 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none justify-between"
                 role="menuitem"
               >
