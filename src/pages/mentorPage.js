@@ -1,12 +1,15 @@
 import React, { useContext, useState, useRef } from "react";
+import { produce } from "immer";
+
 import PoseCard from "../components/poseCard";
 
 import WebcamComponent from "../components/webCamera";
 
 import { PoseContext } from "../contexts/poseContext";
 
-const defaultPose = {
-  data: {
+const DEFAULT_POSE = {
+  poses: {
+    id: "",
     pose_name: "",
     priority: 1,
     instructions: "",
@@ -39,56 +42,41 @@ function MentorPage() {
   const { addPose, deletePose } = useContext(PoseContext);
 
   const addCard = () => {
-    addPose(cardInfo[cardInfo.length - 1]);
+    console.log(cardInfo[cardInfo.length - 1]);
+    // addPose(cardInfo[cardInfo.length - 1]).then((result) => setCards);
 
-    let newCard = JSON.parse(JSON.stringify(defaultPose));
-    setCards([...cardInfo, newCard]);
+    let newCard = JSON.parse(JSON.stringify(DEFAULT_POSE));
+    setCards((prevCards) => [...prevCards, newCard]);
   };
 
   const handleSaveYoga = () => {};
 
-  const handleClickTakePicture = (index) => {
-    if (videoRef.current && canvasRef.current) {
-      const video = videoRef.current;
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-
-      // Set canvas dimensions equal to the video dimensions
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-
-      // Draw the current video frame onto the canvas
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      const imageDataUrl = canvas.toDataURL();
-
-      const updatedCard = cardInfo.map((card, cardIndex) => {
-        if (index === cardIndex) card.images.unshift(imageDataUrl);
-        return card;
-      });
-
-      setCards(updatedCard);
+  const handleClickTakePicture = (index, picture) => {
+    if (picture) {
+      setCards((prevCards) =>
+        produce(prevCards, (draft) => {
+          draft[index].images.unshift(picture); // Add the picture to the beginning of the images array
+        })
+      );
     }
   };
 
   const handleClickTakeVideo = (index, video) => {
-    setCards(
-      cardInfo.map((cardInfo, _index) => {
-        if (index === _index) {
-          cardInfo["video"] = video;
-        }
-        return cardInfo;
+    if (!video) return;
+
+    setCards((prevCards) =>
+      produce(prevCards, (draft) => {
+        draft[index].video = video; // Directly update the video field in the draft
       })
     );
   };
 
-  const handleClickInstruction = (index, instrcution) => {
-    setCards(
-      cardInfo.map((cardInfo, _index) => {
-        if (index === _index) {
-          cardInfo["data"]["instructions"] = instrcution;
-        }
-        return cardInfo;
+  const handleClickInstruction = (index, instruction) => {
+    if (!instruction) return;
+
+    setCards((prevCards) =>
+      produce(prevCards, (draft) => {
+        draft[index].poses.instructions = instruction; // Directly modify the draft
       })
     );
   };
@@ -96,29 +84,23 @@ function MentorPage() {
   const handleClickReTakeVideo = (index) => {};
 
   const handleChangeRepeartCount = (index, level, count) => {
-    setCards(
-      cardInfo.map((cardInfo, _index) => {
-        if (index === _index) {
-          cardInfo["data"][level]["no_of_times"] = count;
-        }
-        return cardInfo;
+    setCards((prevCards) =>
+      produce(prevCards, (draft) => {
+        draft[index].poses[level].no_of_times = count;
       })
     );
   };
 
   const handleChangeNeedTimer = (index, level, time) => {
-    setCards(
-      cardInfo.map((cardInfo, _index) => {
-        if (index === _index) {
-          cardInfo["data"][level]["time"] = time;
-        }
-        return cardInfo;
+    setCards((prevCards) =>
+      produce(prevCards, (draft) => {
+        draft[index].poses[level].time = time;
       })
     );
   };
 
   const handleClickClose = (id) => {
-    deletePose({ pose_id: cardInfo[id].id });
+    deletePose({ pose_id: cardInfo[id]?.poses?.id });
 
     const updatedCard = (cardInfo) =>
       cardInfo.filter((_, index) => index !== id);
@@ -219,15 +201,15 @@ function MentorPage() {
                   key={index}
                   id={index}
                   card={card}
-                  onClickTakePicture={() => handleClickTakePicture(index)}
-                  onClickTakeVideo={() => handleClickTakeVideo(index)}
-                  onClickReTakeVideo={() => handleClickReTakeVideo(index)}
-                  onClickInstruction={(instrcution) =>
-                    handleClickInstruction(index, instrcution)
-                  }
-                  onChangeRepeartCount={() => handleChangeRepeartCount(index)}
-                  onChangeNeedTimer={() => handleChangeNeedTimer(index)}
-                  onClickClose={() => handleClickClose(index)}
+                  videoRef={videoRef}
+                  canvasRef={canvasRef}
+                  onClickTakePicture={handleClickTakePicture}
+                  onClickTakeVideo={handleClickTakeVideo}
+                  onClickReTakeVideo={handleClickReTakeVideo}
+                  onClickInstruction={handleClickInstruction}
+                  onChangeRepeartCount={handleChangeRepeartCount}
+                  onChangeNeedTimer={handleChangeNeedTimer}
+                  onClickClose={handleClickClose}
                 />
               ))}
             </div>
