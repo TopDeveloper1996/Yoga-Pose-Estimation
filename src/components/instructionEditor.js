@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-const InstructionEditor = () => {
+const InstructionEditor = ({ onSave }) => {
   const [speechMute, setSpeechMute] = useState(false);
   const [collapse, setCollapse] = useState(false);
+  const textAreaRef = useRef(null);
+
   const handleClickMute = () => {
     setSpeechMute(!speechMute);
   };
@@ -85,10 +87,18 @@ const InstructionEditor = () => {
           </div>
         </div>
         <div className="inline-flex w-full h-32 text-gray-800 px-3 py-2 overflow-y-auto">
-          <textarea className="w-full h-full focus:outline-none resize-none"></textarea>
+          <textarea
+            className="w-full h-full focus:outline-none resize-none"
+            ref={textAreaRef}
+          ></textarea>
         </div>
         <div className="w-full text-gray-800  overflow-y-auto flex justify-end">
-          <button className="m-1 w-[30%] md:h-10 bg-[#004392]   shadow-gray-500  shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded text-center text-white text-lg content-center">
+          <button
+            className="m-1 w-[30%] md:h-10 bg-[#004392]   shadow-gray-500  shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded text-center text-white text-lg content-center"
+            onClick={() => {
+              onSave(textAreaRef.current.value);
+            }}
+          >
             Save
           </button>
         </div>
