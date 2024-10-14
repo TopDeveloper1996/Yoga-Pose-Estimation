@@ -11,7 +11,7 @@ const LearnerState = ({ level, time, percent }) => {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="size-6 text-[#004392]"
+          className="size-6 text-primary"
         >
           <path
             strokeLinecap="round"
@@ -19,9 +19,7 @@ const LearnerState = ({ level, time, percent }) => {
             d="M8.242 5.992h12m-12 6.003H20.24m-12 5.999h12M4.117 7.495v-3.75H2.99m1.125 3.75H2.99m1.125 0H5.24m-1.92 2.577a1.125 1.125 0 1 1 1.591 1.59l-1.83 1.83h2.16M2.99 15.745h1.125a1.125 1.125 0 0 1 0 2.25H3.74m0-.002h.375a1.125 1.125 0 0 1 0 2.25H2.99"
           />
         </svg>
-        <span className="flex float-right ml-1 w-2 text-[#004392]">
-          {level}
-        </span>
+        <span className="flex float-right ml-1 w-2 text-primary">{level}</span>
       </div>
       <div
         className="ml-1 flex justify-between w-full rounded-md  px-1 text-[12px] font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-right items-center"
@@ -33,7 +31,7 @@ const LearnerState = ({ level, time, percent }) => {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="size-6 text-[#004392]"
+          className="size-6 text-primary"
         >
           <path
             strokeLinecap="round"
@@ -42,11 +40,11 @@ const LearnerState = ({ level, time, percent }) => {
           />
         </svg>
 
-        <span className="inline-flex float-right ml-1 text-[#004392]">
+        <span className="inline-flex float-right ml-1 text-primary">
           {time}
         </span>
       </div>
-      <div className="mx-3 flex h-full font-semibold text-[#004392]">
+      <div className="mx-3 flex h-full font-semibold text-primary">
         <span>Match:</span>
         {90 <= Number(percent) && Number(percent) <= 100 ? (
           <span className="text-green-600">{percent}</span>

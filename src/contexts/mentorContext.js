@@ -65,22 +65,25 @@ const MentorProvider = ({ children }) => {
     }
   };
 
-  const getCampusCourseBatch = async ({ campusId, campusGroupId }) => {
+  const getCampusCourseBatch = async ({ campus_course_id }) => {
     setLoadingSubjects(true);
     setErrorSubjects(null);
+    // is_campus_subject is 1 then it is campust subject
+    //                      0 then it is regular subject
     try {
       const response = await axios.post(
         "api/campus_onboarding_ms/getCampusCourseBatch?courseSection=subject_names",
-        {
-          campus_id: campusId,
-          campus_group_id: campusGroupId,
-        }
+        { campus_course_id }
       );
       if (response.data.status === 200) {
         setSubjects(response.data);
+
+        return response.data;
       } else {
         setSubjects([]);
         setErrorSubjects(response.data.msg);
+
+        return [];
       }
     } catch (err) {
       setErrorSubjects(err.message);
