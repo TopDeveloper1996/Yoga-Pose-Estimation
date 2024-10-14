@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const InstructionEditor = ({ onSave }) => {
+const InstructionEditor = ({ value, onSave }) => {
   const [speechMute, setSpeechMute] = useState(false);
   const [collapse, setCollapse] = useState(false);
   const textAreaRef = useRef(null);
@@ -8,12 +8,15 @@ const InstructionEditor = ({ onSave }) => {
   const handleClickMute = () => {
     setSpeechMute(!speechMute);
   };
+  useEffect(() => {
+    textAreaRef.current.value = value;
+  }, []);
 
   return (
-    <div id="instructionView" className="w-full flex grow-0">
-      <div className="flex-col w-full shadow-gray-500 border-x border-y shadow-md rounded mx-1 mb-2">
+    <div id="instructionView" className="w-full flex grow-0 h-full">
+      <div className="flex-col w-full h-full">
         <div className="inline-flex w-full h-10 justify-between items-center">
-          <span className="text-[#004392] font-semibold text-[16px] mx-3">
+          <span className="text-primary font-semibold text-[16px] mx-3">
             Instruction
           </span>
           <div className="w-23 h-8 flex mx-2">
@@ -25,7 +28,7 @@ const InstructionEditor = ({ onSave }) => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-[#004392]"
+                  className="size-5 text-primary"
                 >
                   <path
                     strokeLinecap="round"
@@ -40,7 +43,7 @@ const InstructionEditor = ({ onSave }) => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-[#004392]"
+                  className="size-5 text-primary"
                 >
                   <path
                     strokeLinecap="round"
@@ -59,7 +62,7 @@ const InstructionEditor = ({ onSave }) => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-[#004392]"
+                  className="size-5 text-primary"
                 >
                   <path
                     strokeLinecap="round"
@@ -74,7 +77,7 @@ const InstructionEditor = ({ onSave }) => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-5 text-[#004392]"
+                  className="size-5 text-primary"
                 >
                   <path
                     strokeLinecap="round"
@@ -86,7 +89,7 @@ const InstructionEditor = ({ onSave }) => {
             </button>
           </div>
         </div>
-        <div className="inline-flex w-full h-32 text-gray-800 px-3 py-2 overflow-y-auto">
+        <div className="inline-flex w-full flex-1 text-gray-800 px-3 py-2 overflow-y-auto">
           <textarea
             className="w-full h-full focus:outline-none resize-none"
             ref={textAreaRef}
@@ -94,7 +97,7 @@ const InstructionEditor = ({ onSave }) => {
         </div>
         <div className="w-full text-gray-800  overflow-y-auto flex justify-end">
           <button
-            className="m-1 w-[30%] md:h-10 bg-[#004392]   shadow-gray-500  shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded text-center text-white text-lg content-center"
+            className="m-1 w-[30%] md:h-10 bg-primary   shadow-gray-500  shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded text-center text-white text-lg content-center"
             onClick={() => {
               onSave(textAreaRef.current.value);
             }}
