@@ -30,7 +30,7 @@ const PoseProvider = ({ children }) => {
       setLoadingPose(true);
       setErrorPose(null);
       try {
-        await fn(...args);
+        return await fn(...args);
       } catch (err) {
         setErrorPose(err.message || "An error occurred");
       } finally {
@@ -60,7 +60,8 @@ const PoseProvider = ({ children }) => {
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
-      if (response.status === "201") {
+      if (response.status === 201) {
+        return response.data.data;
       } else {
         throw new Error(response.data.message || "Failed to add pose");
       }
@@ -94,7 +95,9 @@ const PoseProvider = ({ children }) => {
       );
 
       if (response.status === 200) {
-        setFetchedPoses(response.data.data.posed);
+        setFetchedPoses(response.data[0].poses);
+
+        return response.data.data;
       } else {
         throw new Error(response.data.message || "Failed to get pose");
       }
