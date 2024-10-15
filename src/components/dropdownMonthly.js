@@ -1,7 +1,7 @@
 // src/components/Dropdown.js
 import React, { useState, useRef, useEffect } from "react";
 
-const DropdownMonthly = () => {
+const DropdownMonthly = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("August");
   const dropdownRef = useRef(null);
@@ -48,7 +48,7 @@ const DropdownMonthly = () => {
       <div>
         <button
           onClick={toggleDropdown}
-          className="flex ml-1 h-8 font-medium text-[#004392] focus:bg-[#004392] focus:text-white justify-between w-full rounded-md border-2 border-[#004392] shadow-sm px-1 bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-right items-center"
+          className="flex ml-1 h-8 font-medium text-primary focus:bg-primary focus:text-white justify-between w-full rounded-md border-2 border-primary shadow-sm px-1 bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-right items-center"
           aria-haspopup="true"
           aria-expanded={isOpen}
         >
@@ -71,7 +71,7 @@ const DropdownMonthly = () => {
       </div>
 
       {isOpen && (
-        <div className="h-48 overflow-y-auto left-1 mt-1 px-1 flex justify-center absolute z-10 w-28 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-[#004392] border-x-2 border-y-2">
+        <div className="h-48 overflow-y-auto left-1 mt-1 px-1 flex justify-center absolute z-10 w-28 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-primary border-x-2 border-y-2">
           <div
             className="w-fit flex-wrap"
             role="menu"
@@ -84,7 +84,7 @@ const DropdownMonthly = () => {
                 onClick={() =>
                   handleSelect(options[options.length - index - 1])
                 }
-                className="flex w-full font-medium py-1 text-[#004392] hover:bg-gray-100 focus:outline-none justify-between"
+                className="flex w-full font-medium py-1 text-primary hover:bg-gray-100 focus:outline-none justify-between"
                 role="menuitem"
               >
                 {options[options.length - index - 1]}
