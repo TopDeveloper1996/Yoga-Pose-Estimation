@@ -10,13 +10,11 @@ const cardData = {
 };
 
 const LearnerCard = ({ id, card }) => {
-  const ref = useRef(null);
-
   const [cardInfo, setCardInfo] = useState();
 
   return (
-    <div className="flex flex-col w-full h-full" ref={ref}>
-      <div className="w-full  rounded-t-md rounded-tr-md h-8  bg-[#004392] items-center flex justify-between">
+    <div className="flex flex-col w-full flex-[2] shadow-gray-500 shadow-md ">
+      <div className="w-full rounded-t-md rounded-tr-md h-10 bg-primary items-center flex justify-between">
         <div className="content-center items-center flex">
           <button
             id="picture-button"
@@ -129,13 +127,18 @@ const LearnerCard = ({ id, card }) => {
             <span className="inline-flex float-right ml-1 text-white mx-2">
               {"02:00"}
             </span>
-          </div>{" "}
+          </div>
         </div>
       </div>
-      <div
-        id="studyView"
-        className="w-full h-64 md:h-full shadow-gray-500  shadow-md border-x border-y rounded-b"
-      ></div>
+      <div className=" w-full flex-1 flex justify-center relative rounded-b border-x border-y">
+        {card?.imgs?.length > 0 && (
+          <img
+            className="absolute h-full w-full flex-1 object-cover"
+            src={card?.imgs[1]?.img_url || ""}
+            alt=""
+          />
+        )}
+      </div>
     </div>
   );
 };
