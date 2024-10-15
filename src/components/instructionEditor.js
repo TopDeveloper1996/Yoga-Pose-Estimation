@@ -13,9 +13,9 @@ const InstructionEditor = ({ value, onSave }) => {
   }, []);
 
   return (
-    <div id="instructionView" className="w-full flex grow-0 h-full">
-      <div className="flex-col w-full h-full">
-        <div className="inline-flex w-full h-10 justify-between items-center">
+    <div className="w-full flex grow-0 h-full">
+      <div className="flex flex-col w-full h-full">
+        <div className="flex w-full h-10 justify-between items-center">
           <span className="text-primary font-semibold text-[16px] mx-3">
             Instruction
           </span>
@@ -89,15 +89,15 @@ const InstructionEditor = ({ value, onSave }) => {
             </button>
           </div>
         </div>
-        <div className="inline-flex w-full flex-1 text-gray-800 px-3 py-2 overflow-y-auto">
+        <div className="flex w-full flex-1 text-gray-800 px-3 py-2 overflow-y-auto">
           <textarea
             className="w-full h-full focus:outline-none resize-none"
             ref={textAreaRef}
           ></textarea>
         </div>
-        <div className="w-full text-gray-800  overflow-y-auto flex justify-end">
+        <div className="w-full text-gray-800 overflow-y-auto flex justify-end">
           <button
-            className="m-1 w-[30%] md:h-10 bg-primary   shadow-gray-500  shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded text-center text-white text-lg content-center"
+            className="m-1 w-[30%] md:h-10 bg-primary shadow-gray-500  shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded text-center text-white text-lg content-center"
             onClick={() => {
               onSave(textAreaRef.current.value);
             }}
