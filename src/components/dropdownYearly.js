@@ -1,7 +1,7 @@
 // src/components/Dropdown.js
 import React, { useState, useRef, useEffect } from "react";
 
-const DropdownYearly = () => {
+const DropdownYearly = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("2024");
   const buttonsRefs = useRef([]);
@@ -53,13 +53,12 @@ const DropdownYearly = () => {
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-    // const ref = buttonsRefs.current[options.indexOf(selected)];
-    // ref.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
   const handleSelect = (option) => {
     setSelected(option);
     setIsOpen(false);
+    console.log(option);
   };
 
   return (
@@ -67,7 +66,7 @@ const DropdownYearly = () => {
       <div className="">
         <button
           onClick={() => toggleDropdown()}
-          className="flex ml-1 h-8 font-medium focus:bg-[#004392] focus:text-white justify-between w-full rounded-md border-2 border-[#004392] shadow-sm px-1 bg-white text-[#004392] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 items-center"
+          className="flex ml-1 h-8 font-medium focus:bg-primary focus:text-white justify-between w-full rounded-md border-2 border-primary shadow-sm px-1 bg-white text-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 items-center"
           aria-haspopup="true"
           aria-expanded={isOpen}
         >
@@ -90,7 +89,7 @@ const DropdownYearly = () => {
       </div>
 
       {isOpen && (
-        <div className="mt-1 overflow-y-auto h-48 left-1 px-1 absolute z-10 rounded-md flex justify-center w-20 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-[#004392] border-x-2 border-y-2">
+        <div className="mt-1 overflow-y-auto h-48 left-1 px-1 absolute z-10 rounded-md flex justify-center w-20 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-primary border-x-2 border-y-2">
           <div
             className="w-fit flex-wrap"
             role="menu"
@@ -103,7 +102,7 @@ const DropdownYearly = () => {
                 key={option}
                 onClick={() => handleSelect(option)}
                 ref={(el) => (buttonsRefs.current[index] = el)}
-                className="flex w-full font-medium text-center text-[#004392] hover:bg-gray-100 focus:outline-none"
+                className="flex w-full font-medium text-center text-primary hover:bg-gray-100 focus:outline-none"
                 role="menuitem"
               >
                 {option}
