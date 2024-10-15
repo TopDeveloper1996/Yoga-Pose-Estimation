@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
+import useCamera from "../hooks/useCamera";
 
 const WebcamComponent = ({ videoRef, canvasRef }) => {
+  const { cameraState } = useCamera();
+
   useEffect(() => {
+    if (!videoRef.current || !canvasRef.current) {
+      console.error("Video or canvas reference is missing.");
+      return;
+    }
+
     const startWebcam = async () => {
       try {
-        // Request video stream from the webcam
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
         });
-        // Set the video element's source to the stream
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
@@ -17,26 +23,36 @@ const WebcamComponent = ({ videoRef, canvasRef }) => {
       }
     };
 
-    startWebcam(); // Start the webcam when the component mounts
+    startWebcam();
 
-    // Cleanup function to stop the stream when the component unmounts
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
         const tracks = videoRef.current.srcObject.getTracks();
-        tracks.forEach((track) => track.stop()); // Stop all tracks
+        tracks.forEach((track) => track.stop());
       }
     };
-  }, [videoRef]);
+  }, [videoRef, canvasRef]);
 
   return (
-    <div className="w-full h-full p-1">
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        className="w-full h-full object-cover"
-      />
-      <canvas ref={canvasRef} style={{ display: "none" }} />{" "}
+    <div className="md:h-full w-full bg-white shadow-gray-500  rounded mx-1 shadow-md border-x border-y md-view-height">
+      {cameraState ? (
+        <div className="w-full h-full p-1">
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            className="w-full h-full object-cover"
+          />
+          <canvas ref={canvasRef} style={{ display: "none" }} />{" "}
+        </div>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center p-10 text-center">
+          <span className="text-primary">
+            Camera access is denied or not available. Please check your camera
+            settings and permissions.
+          </span>
+        </div>
+      )}
     </div>
   );
 };
