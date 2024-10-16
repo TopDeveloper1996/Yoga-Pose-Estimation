@@ -50,7 +50,6 @@ const useMentor = () => {
       setCards((prevCards) =>
         produce(prevCards, (draft) => {
           let newCard = JSON.parse(JSON.stringify(DEFAULT_POSE));
-          console.log(nameRef.current.value);
           newCard.poses.pose_name = nameRef.current.value;
           draft.push(newCard);
         })
@@ -72,7 +71,6 @@ const useMentor = () => {
         images: cardInfo[index].images,
         video: cardInfo[index].video,
       }).then((result) => {
-        console.log(result);
       });
     };
   
@@ -101,7 +99,9 @@ const useMentor = () => {
     }
 
     const handleSaveYogaClick = () => {
-      console.log(cardInfo[0].poses);
+      
+      
+      setCards([]);
     };
   
     const handleTakePictureClick = (index, picture) => {
@@ -114,7 +114,6 @@ const useMentor = () => {
     };
   
     const handleTakeVideoClick = (index, video) => {
-      console.log(video);
       if (!video) return;
   
       setCards((prevCards) =>
