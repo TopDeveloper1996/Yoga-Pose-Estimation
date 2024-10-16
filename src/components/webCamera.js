@@ -31,7 +31,7 @@ const WebcamComponent = ({ videoRef, canvasRef }) => {
         tracks.forEach((track) => track.stop());
       }
     };
-  }, [videoRef, canvasRef]);
+  }, [videoRef, canvasRef, cameraState]);
 
   return (
     <div className="md:h-full w-full bg-white shadow-gray-500  rounded mx-1 shadow-md border-x border-y md-view-height">
