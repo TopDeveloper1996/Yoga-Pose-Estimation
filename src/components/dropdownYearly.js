@@ -1,24 +1,41 @@
 // src/components/Dropdown.js
 import React, { useState, useRef, useEffect } from "react";
 
-const DropdownMonthly = () => {
+const DropdownYearly = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("August");
+  const [selected, setSelected] = useState("2024");
+  const buttonsRefs = useRef([]);
   const dropdownRef = useRef(null);
 
   const options = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "March",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025",
+    "2026",
+    "2027",
+    "2028",
+    "2029",
+    "2030",
+    "2031",
+    "2032",
+    "2033",
+    "2034",
+    "2035",
+    "2036",
+    "2037",
+    "2038",
+    "2039",
+    "2040",
+    "2041",
+    "2042",
+    "2043",
+    "2044",
+    "2045",
+    "2046",
+    "2047",
   ];
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -41,21 +58,22 @@ const DropdownMonthly = () => {
   const handleSelect = (option) => {
     setSelected(option);
     setIsOpen(false);
+    console.log(option);
   };
 
   return (
-    <div className="relative inline-block ml-4 w-28" ref={dropdownRef}>
-      <div>
+    <div className="relative inline-block w-20" ref={dropdownRef}>
+      <div className="">
         <button
-          onClick={toggleDropdown}
-          className="flex ml-1 h-8 font-medium text-[#004392] focus:bg-[#004392] focus:text-white justify-between w-full rounded-md border-2 border-[#004392] shadow-sm px-1 bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-right items-center"
+          onClick={() => toggleDropdown()}
+          className="flex ml-1 h-8 font-medium focus:bg-primary focus:text-white justify-between w-full rounded-md border-2 border-primary shadow-sm px-1 bg-white text-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 items-center"
           aria-haspopup="true"
           aria-expanded={isOpen}
         >
           <span className="w-2"></span>
           <span className="">{selected}</span>
           <svg
-            className="ml-1 h-5 w-4"
+            className="h-5 w-4"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -71,23 +89,23 @@ const DropdownMonthly = () => {
       </div>
 
       {isOpen && (
-        <div className="h-48 overflow-y-auto left-1 mt-1 px-1 flex justify-center absolute z-10 w-28 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-[#004392] border-x-2 border-y-2">
+        <div className="mt-1 overflow-y-auto h-48 left-1 px-1 absolute z-10 rounded-md flex justify-center w-20 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-primary border-x-2 border-y-2">
           <div
             className="w-fit flex-wrap"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"
+            id="dropdown-menu"
           >
             {options.map((option, index) => (
               <button
-                key={options[options.length - index - 1]}
-                onClick={() =>
-                  handleSelect(options[options.length - index - 1])
-                }
-                className="flex w-full font-medium py-1 text-[#004392] hover:bg-gray-100 focus:outline-none justify-between"
+                key={option}
+                onClick={() => handleSelect(option)}
+                ref={(el) => (buttonsRefs.current[index] = el)}
+                className="flex w-full font-medium text-center text-primary hover:bg-gray-100 focus:outline-none"
                 role="menuitem"
               >
-                {options[options.length - index - 1]}
+                {option}
               </button>
             ))}
           </div>
@@ -97,4 +115,4 @@ const DropdownMonthly = () => {
   );
 };
 
-export default DropdownMonthly;
+export default DropdownYearly;
