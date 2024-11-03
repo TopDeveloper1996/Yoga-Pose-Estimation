@@ -106,26 +106,20 @@ const WebcamComponent = ({ videoRef, canvasRef }) => {
   return (
     <div className="md:h-full w-full bg-white shadow-gray-500  rounded mx-1 shadow-md border-x border-y md-view-height">
       {cameraState ? (
-        <div className="w-full h-full p-1">
+        <div className="w-full h-full p-1 flex">
+        <div className="relative w-full h-full">
           <video
             ref={videoRef}
             autoPlay
             playsInline
             className="w-full h-full object-cover"
-            style={{ position: "absolute", top: 0, left: 0 }}
           />
           <canvas
             ref={canvasRef}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              pointerEvents: "none"
-            }}
+            className="w-full h-full absolute top-0 left-0"
           />
         </div>
+      </div>
       ) : (
         <div className="flex h-full w-full items-center justify-center p-10 text-center">
           <span className="text-primary">
